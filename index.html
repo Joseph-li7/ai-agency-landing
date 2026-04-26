@@ -6,7 +6,6 @@
 <title>AI Automation Agency — Custom AI Solutions for Business</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
-<script src="https://js.stripe.com/v3/"></script>
 <style>
 :root {
   --bg: #faf9f7;
@@ -21,30 +20,36 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* SVG ICONS */
+.icon { display: inline-block; vertical-align: middle; }
+.icon svg { width: 100%; height: 100%; }
 
 /* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: 20px 40px;
   display: flex; justify-content: space-between; align-items: center;
-  background: rgba(250,249,247,0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(250,249,247,0.92);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
 }
-nav.scrolled { border-bottom-color: var(--border); }
-nav .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2em; letter-spacing: -0.02em; }
+nav.scrolled { border-bottom-color: var(--border); box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
+nav .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2em; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+nav .logo .logo-icon { width: 28px; height: 28px; }
 nav .logo span { color: var(--accent); }
 nav ul { list-style: none; display: flex; gap: 32px; }
 nav a { text-decoration: none; color: var(--ink); font-size: 0.95em; font-weight: 500; transition: color 0.2s; }
 nav a:hover { color: var(--accent); }
-nav .cta-btn { background: var(--ink); color: white !important; padding: 10px 24px; border-radius: 100px; font-size: 0.9em !important; text-decoration: none; }
+nav .cta-btn { background: var(--ink); color: white !important; padding: 10px 24px; border-radius: 100px; font-size: 0.9em !important; text-decoration: none; transition: all 0.2s; }
 nav .cta-btn:hover { background: var(--accent) !important; }
 
 /* HERO */
@@ -69,12 +74,12 @@ nav .cta-btn:hover { background: var(--accent) !important; }
   font-size: 0.85em; color: var(--muted); margin-bottom: 28px;
   animation: fadeUp 0.6s ease both;
 }
-.hero-badge span { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
+.hero-badge .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 .hero h1 {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(3em, 8vw, 5.5em);
+  font-size: clamp(2.8em, 7vw, 5em);
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;
@@ -89,11 +94,12 @@ nav .cta-btn:hover { background: var(--accent) !important; }
   background-clip: text;
 }
 .hero-sub {
-  font-size: 1.25em;
+  font-size: 1.2em;
   color: var(--muted);
-  max-width: 520px;
+  max-width: 500px;
   margin-bottom: 40px;
   animation: fadeUp 0.6s 0.2s ease both;
+  line-height: 1.7;
 }
 .hero-actions {
   display: flex; gap: 16px; flex-wrap: wrap;
@@ -131,7 +137,7 @@ nav .cta-btn:hover { background: var(--accent) !important; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* LOGOS STRIP */
+/* LOGOS */
 .logos {
   padding: 48px 40px;
   border-top: 1px solid var(--border);
@@ -139,10 +145,10 @@ nav .cta-btn:hover { background: var(--accent) !important; }
   text-align: center;
 }
 .logos p { font-size: 0.8em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; }
-.logo-strip { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; opacity: 0.4; }
-.logo-strip span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2em; }
+.logo-strip { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; opacity: 0.35; }
+.logo-strip span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1em; }
 
-/* SERVICES */
+/* SECTIONS */
 .section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
 .section-label {
   font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.12em;
@@ -154,8 +160,9 @@ nav .cta-btn:hover { background: var(--accent) !important; }
   font-weight: 800; letter-spacing: -0.02em;
   margin-bottom: 16px;
 }
-.section-sub { font-size: 1.1em; color: var(--muted); max-width: 560px; margin-bottom: 56px; }
+.section-sub { font-size: 1.1em; color: var(--muted); max-width: 560px; margin-bottom: 56px; line-height: 1.7; }
 
+/* SERVICE CARDS */
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
 .service-card {
   background: var(--card);
@@ -173,9 +180,17 @@ nav .cta-btn:hover { background: var(--accent) !important; }
 }
 .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); border-color: transparent; }
 .service-card:hover::before { transform: scaleX(1); }
-.service-icon { font-size: 2.5em; margin-bottom: 20px; display: block; }
+
+.service-icon {
+  width: 56px; height: 56px; margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(232,68,10,0.1), rgba(232,68,10,0.05));
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.service-icon svg { width: 32px; height: 32px; }
+
 .service-card h3 { font-family: 'Syne', sans-serif; font-size: 1.3em; font-weight: 700; margin-bottom: 10px; }
-.service-card p { color: var(--muted); font-size: 0.95em; margin-bottom: 20px; }
+.service-card p { color: var(--muted); font-size: 0.95em; margin-bottom: 20px; line-height: 1.6; }
 .service-price {
   font-family: 'Syne', sans-serif; font-size: 1.8em; font-weight: 800;
   color: var(--accent); margin-bottom: 16px;
@@ -183,14 +198,16 @@ nav .cta-btn:hover { background: var(--accent) !important; }
 .service-price span { font-size: 0.5em; color: var(--muted); font-weight: 400; }
 .service-features { list-style: none; margin-bottom: 24px; }
 .service-features li { padding: 6px 0; font-size: 0.9em; display: flex; align-items: flex-start; gap: 8px; }
-.service-features li::before { content: '✓'; color: #22c55e; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-.card-cta { display: inline-block; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.95em; border-bottom: 2px solid var(--accent); padding-bottom: 2px; transition: color 0.2s; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; }
+.service-features li .check { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+.card-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.95em; border-bottom: 2px solid var(--accent); padding-bottom: 2px; transition: color 0.2s; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; }
 .card-cta:hover { color: var(--accent); }
+.card-cta .arrow { width: 16px; height: 16px; }
 
 /* HOW IT WORKS */
 .how-it-works { background: var(--ink); color: white; border-radius: 24px; padding: 80px; margin: 0 40px; max-width: 1100px; margin-left: auto; margin-right: auto; }
 .how-it-works .section-title { color: white; }
 .how-it-works .section-sub { color: rgba(255,255,255,0.6); }
+.how-it-works .section-label { color: rgba(255,255,255,0.5); }
 .how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
 .how-step { text-align: center; }
 .step-num {
@@ -207,7 +224,7 @@ nav .cta-btn:hover { background: var(--accent) !important; }
 
 /* TESTIMONIAL */
 .testimonial { background: white; border-radius: var(--radius); padding: 48px; border: 1px solid var(--border); max-width: 680px; margin: 0 auto; text-align: center; }
-.testimonial-quote { font-size: 1.4em; font-style: italic; line-height: 1.5; margin-bottom: 24px; color: var(--ink); }
+.testimonial-quote { font-size: 1.3em; font-style: italic; line-height: 1.6; margin-bottom: 24px; color: var(--ink); }
 .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 12px; }
 .testimonial-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), #f97316); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.1em; }
 .testimonial-info { text-align: left; }
@@ -215,19 +232,43 @@ nav .cta-btn:hover { background: var(--accent) !important; }
 .testimonial-info span { font-size: 0.85em; color: var(--muted); }
 
 /* PRICING */
-.pricing-toggle { display: flex; justify-content: center; gap: 12px; margin-bottom: 48px; align-items: center; }
-.toggle-label { font-size: 0.9em; color: var(--muted); }
-.toggle-label.active { color: var(--ink); font-weight: 600; }
-.save-badge { background: var(--accent); color: white; font-size: 0.75em; padding: 2px 8px; border-radius: 100px; font-weight: 600; }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.pricing-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: all 0.25s;
+  position: relative;
+}
+.pricing-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+.pricing-card.popular { border-color: var(--accent); border-width: 2px; }
+.popular-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: white;
+  font-size: 0.7em; padding: 4px 12px; border-radius: 100px;
+  font-weight: 700; white-space: nowrap;
+}
+.pricing-card .pricing-icon { width: 48px; height: 48px; margin-bottom: 16px; }
+.pricing-card h3 { font-family: 'Syne', sans-serif; font-size: 1.2em; font-weight: 700; margin-bottom: 8px; }
+.pricing-card .pricing-desc { color: var(--muted); font-size: 0.9em; margin-bottom: 16px; line-height: 1.5; }
+.pricing-card .pricing-price { font-family: 'Syne', sans-serif; font-size: 1.6em; font-weight: 800; color: var(--accent); margin-bottom: 16px; }
+.pricing-card .pricing-price span { font-size: 0.5em; color: var(--muted); font-weight: 400; }
+.pricing-features { list-style: none; margin-bottom: 24px; }
+.pricing-features li { padding: 5px 0; font-size: 0.88em; display: flex; align-items: center; gap: 8px; }
+.pricing-features li .check { width: 16px; height: 16px; flex-shrink: 0; }
+.pricing-card .btn-primary { width: 100%; justify-content: center; }
 
 /* FAQ */
 .faq-list { max-width: 680px; margin: 0 auto; }
-.faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; }
-.faq-item h4 { font-family: 'Syne', sans-serif; font-size: 1.05em; margin-bottom: 8px; cursor: pointer; }
-.faq-item p { color: var(--muted); font-size: 0.95em; display: none; }
+.faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; cursor: pointer; }
+.faq-item h4 { font-family: 'Syne', sans-serif; font-size: 1.05em; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+.faq-item h4 .toggle { width: 20px; height: 20px; transition: transform 0.2s; }
+.faq-item.open h4 .toggle { transform: rotate(45deg); }
+.faq-item p { color: var(--muted); font-size: 0.95em; display: none; line-height: 1.6; }
 .faq-item.open p { display: block; }
 
-/* CTA SECTION */
+/* CTA */
 .cta-section {
   background: var(--ink);
   color: white;
@@ -248,10 +289,24 @@ nav .cta-btn:hover { background: var(--accent) !important; }
 .cta-section p { font-size: 1.1em; color: rgba(255,255,255,0.6); margin-bottom: 40px; position: relative; }
 
 /* FOOTER */
-footer { padding: 48px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+footer { padding: 48px 40px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; max-width: 1100px; margin: 0 auto; }
 footer p { font-size: 0.85em; color: var(--muted); }
 footer a { color: var(--ink); text-decoration: none; font-size: 0.85em; }
 footer a:hover { color: var(--accent); }
+footer .footer-links { display: flex; gap: 24px; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  background: var(--ink); color: white; padding: 16px 24px;
+  border-radius: 12px; font-size: 0.9em; max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  transform: translateY(100px); opacity: 0;
+  transition: all 0.3s ease; pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+.toast.error { background: #dc2626; }
+.toast.success { background: #16a34a; }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
@@ -262,38 +317,75 @@ footer a:hover { color: var(--accent); }
   .how-it-works { margin: 0 20px; padding: 48px 24px; }
   .how-steps { grid-template-columns: repeat(2, 1fr); }
   .section { padding: 60px 20px; }
+  .pricing-grid { grid-template-columns: 1fr; }
 }
 
 /* SCROLL REVEAL */
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 
-/* LOADING SPINNER */
+/* SPINNER */
 .spinner {
   display: inline-block; width: 18px; height: 18px;
   border: 2px solid rgba(255,255,255,0.3); border-radius: 50%;
   border-top-color: white; animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* TOAST */
-.toast {
-  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-  background: var(--ink); color: white; padding: 16px 24px;
-  border-radius: 12px; font-size: 0.9em; max-width: 360px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-  transform: translateY(100px); opacity: 0;
-  transition: all 0.3s ease;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.error { background: #dc2626; }
-.toast.success { background: #16a34a; }
 </style>
 </head>
 <body>
 
+<!-- SVG ICONS DEFINITIONS -->
+<svg style="display:none">
+  <symbol id="icon-robot" viewBox="0 0 32 32">
+    <rect x="4" y="8" width="24" height="18" rx="4" fill="#e8440a" opacity="0.15"/>
+    <rect x="6" y="10" width="20" height="14" rx="3" fill="#e8440a" opacity="0.3"/>
+    <circle cx="11" cy="15" r="2.5" fill="#e8440a"/>
+    <circle cx="21" cy="15" r="2.5" fill="#e8440a"/>
+    <rect x="13" y="20" width="6" height="2" rx="1" fill="#e8440a" opacity="0.6"/>
+    <line x1="16" y1="6" x2="16" y2="10" stroke="#e8440a" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="16" cy="4" r="2" fill="#e8440a"/>
+  </symbol>
+  <symbol id="icon-content" viewBox="0 0 32 32">
+    <rect x="6" y="4" width="20" height="24" rx="2" fill="#e8440a" opacity="0.15"/>
+    <rect x="8" y="7" width="12" height="2" rx="1" fill="#e8440a" opacity="0.7"/>
+    <rect x="8" y="11" width="10" height="1.5" rx="0.75" fill="#e8440a" opacity="0.5"/>
+    <rect x="8" y="14" width="14" height="1.5" rx="0.75" fill="#e8440a" opacity="0.4"/>
+    <rect x="8" y="17" width="11" height="1.5" rx="0.75" fill="#e8440a" opacity="0.3"/>
+    <circle cx="24" cy="22" r="4" fill="#e8440a" opacity="0.2"/>
+    <path d="M24 19v6M21 22h6" stroke="#e8440a" stroke-width="1.5" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-data" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="11" fill="#e8440a" opacity="0.1"/>
+    <circle cx="16" cy="16" r="8" fill="#e8440a" opacity="0.2"/>
+    <circle cx="16" cy="16" r="5" fill="#e8440a" opacity="0.4"/>
+    <circle cx="16" cy="16" r="2.5" fill="#e8440a"/>
+    <path d="M16 5v-2M16 27v-2M5 16h-2M27 16h-2" stroke="#e8440a" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  </symbol>
+  <symbol id="icon-rocket" viewBox="0 0 32 32">
+    <path d="M16 3c-4 4-6 10-6 16h12c0-6-2-12-6-16z" fill="#e8440a" opacity="0.3"/>
+    <path d="M16 3c-4 4-6 10-6 16h6V3z" fill="#e8440a" opacity="0.6"/>
+    <circle cx="16" cy="14" r="2.5" fill="#e8440a"/>
+    <path d="M10 18l-2 6 4-2-2-4zM22 18l2 6-4-2 2-4z" fill="#e8440a" opacity="0.4"/>
+  </symbol>
+  <symbol id="icon-check" viewBox="0 0 16 16">
+    <polyline points="14 4 6 12 2 4" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="icon-arrow" viewBox="0 0 16 16">
+    <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <polyline points="9 4 13 8 9 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-plus" viewBox="0 0 20 20">
+    <line x1="10" y1="4" x2="10" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <line x1="4" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
 <nav id="nav">
-  <div class="logo">aibr<span>•</span>agency</div>
+  <div class="logo">
+    <svg class="logo-icon"><use href="#icon-rocket"/></svg>
+    aibr<span>•</span>agency
+  </div>
   <ul>
     <li><a href="#services">Services</a></li>
     <li><a href="#how">How it works</a></li>
@@ -307,7 +399,7 @@ footer a:hover { color: var(--accent); }
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <div class="hero-badge"><span></span> Available for new projects — 2 slots open</div>
+    <div class="hero-badge"><span class="dot"></span> Available for new projects — 2 slots open</div>
     <h1>Custom AI that<br><em>grows your business</em></h1>
     <p class="hero-sub">I build AI chatbots, automate content, and create data systems — tailored to your business. Results in days, not months.</p>
     <div class="hero-actions">
@@ -315,18 +407,9 @@ footer a:hover { color: var(--accent); }
       <a href="#services" class="btn-secondary">See Services</a>
     </div>
     <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">70%+</div>
-        <div class="stat-label">Support tickets deflected</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">4x</div>
-        <div class="stat-label">More content output</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">7 days</div>
-        <div class="stat-label">Average delivery</div>
-      </div>
+      <div class="stat"><div class="stat-num">70%+</div><div class="stat-label">Support tickets deflected</div></div>
+      <div class="stat"><div class="stat-num">4x</div><div class="stat-label">More content output</div></div>
+      <div class="stat"><div class="stat-num">7 days</div><div class="stat-label">Average delivery</div></div>
     </div>
   </div>
 </section>
@@ -335,12 +418,7 @@ footer a:hover { color: var(--accent); }
 <div class="logos">
   <p>Powered by</p>
   <div class="logo-strip">
-    <span>GPT-4</span>
-    <span>Claude</span>
-    <span>Notion</span>
-    <span>Stripe</span>
-    <span>n8n</span>
-    <span>Make</span>
+    <span>GPT-4</span><span>Claude</span><span>Notion</span><span>Stripe</span><span>n8n</span><span>Make</span>
   </div>
 </div>
 
@@ -351,81 +429,62 @@ footer a:hover { color: var(--accent); }
     <h2 class="section-title">What I build for you</h2>
     <p class="section-sub">Three focused offerings. Each one solves a real business problem. Pick what fits your needs.</p>
   </div>
-
   <div class="services-grid reveal">
     <div class="service-card">
-      <span class="service-icon">💬</span>
+      <div class="service-icon"><svg><use href="#icon-robot"/></svg></div>
       <h3>AI Chatbot</h3>
       <p>A custom chatbot trained on your knowledge base. Handles customer questions 24/7. Deflects support tickets automatically.</p>
       <div class="service-price">$1,000–3,000 <span>one-time</span></div>
       <ul class="service-features">
-        <li>Trained on your docs & FAQ</li>
-        <li>Website, Telegram & WeChat</li>
-        <li>Handles 70%+ of tickets</li>
-        <li>Multilingual support</li>
-        <li>30-day bug fixes</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Trained on your docs & FAQ</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Website, Telegram & WeChat</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Handles 70%+ of tickets</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Multilingual support</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>30-day bug fixes</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('chatbot')">Get a chatbot →</button>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="openContact('chatbot')">Get a chatbot <svg class="icon arrow"><use href="#icon-arrow"/></svg></button>
     </div>
-
     <div class="service-card">
-      <span class="service-icon">📝</span>
+      <div class="service-icon"><svg><use href="#icon-content"/></svg></div>
       <h3>Content Automation</h3>
       <p>A full AI content pipeline. Blog posts, social media, emails — all generated, scheduled, and optimized automatically.</p>
       <div class="service-price">$500–1,500 <span>/month</span></div>
       <ul class="service-features">
-        <li>30–90 posts/month</li>
-        <li>SEO-optimized blog content</li>
-        <li>Auto-scheduling</li>
-        <li>Email sequences</li>
-        <li>Monthly strategy call</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>30–90 posts/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>SEO-optimized blog content</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Auto-scheduling</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Email sequences</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Monthly strategy call</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('content')">Start content →</button>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="openContact('content')">Start content <svg class="icon arrow"><use href="#icon-arrow"/></svg></button>
     </div>
-
     <div class="service-card">
-      <span class="service-icon">📊</span>
+      <div class="service-icon"><svg><use href="#icon-data"/></svg></div>
       <h3>Data Dashboards</h3>
       <p>Automated data pipelines and real-time dashboards. Stop manually compiling reports. Get insights delivered daily.</p>
       <div class="service-price">$500–2,000 <span>one-time</span></div>
       <ul class="service-features">
-        <li>Data from any source</li>
-        <li>Real-time dashboards</li>
-        <li>Automated weekly reports</li>
-        <li>AI-generated insights</li>
-        <li>Competitor monitoring</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Data from any source</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Real-time dashboards</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Automated weekly reports</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>AI-generated insights</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Competitor monitoring</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('data')">Build dashboard →</button>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="openContact('data')">Build dashboard <svg class="icon arrow"><use href="#icon-arrow"/></svg></button>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
 <section class="how-it-works" id="how">
-  <p class="section-label" style="color:rgba(255,255,255,0.5)">Process</p>
+  <p class="section-label">Process</p>
   <h2 class="section-title">From idea to live in 7 days</h2>
-  <p class="section-sub" style="color:rgba(255,255,255,0.6)">A simple, predictable process. No surprises. No scope creep.</p>
+  <p class="section-sub">A simple, predictable process. No surprises. No scope creep.</p>
   <div class="how-steps">
-    <div class="how-step">
-      <div class="step-num">01</div>
-      <h4>Discovery</h4>
-      <p>30-min call to understand your business, goals, and constraints.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">02</div>
-      <h4>Build</h4>
-      <p>I build and test. You review progress weekly.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">03</div>
-      <h4>Launch</h4>
-      <p>Go live together. I handle the technical stuff.</p>
-    </div>
-    <div class="how-step">
-      <div class="step-num">04</div>
-      <h4>Optimize</h4>
-      <p>Monthly check-ins to improve results over time.</p>
-    </div>
+    <div class="how-step"><div class="step-num">01</div><h4>Discovery</h4><p>30-min call to understand your business, goals, and constraints.</p></div>
+    <div class="how-step"><div class="step-num">02</div><h4>Build</h4><p>I build and test. You review progress weekly.</p></div>
+    <div class="how-step"><div class="step-num">03</div><h4>Launch</h4><p>Go live together. I handle the technical stuff.</p></div>
+    <div class="how-step"><div class="step-num">04</div><h4>Optimize</h4><p>Monthly check-ins to improve results over time.</p></div>
   </div>
 </section>
 
@@ -435,10 +494,7 @@ footer a:hover { color: var(--accent); }
     <p class="testimonial-quote">"We were paying $8,000/month for a support team. After the AI chatbot, we cut that to $2,400 and response time went from 48 hours to instant."</p>
     <div class="testimonial-author">
       <div class="testimonial-avatar">MK</div>
-      <div class="testimonial-info">
-        <strong>Marketing Director</strong>
-        <span>B2B SaaS, 50 employees</span>
-      </div>
+      <div class="testimonial-info"><strong>Marketing Director</strong><span>B2B SaaS, 50 employees</span></div>
     </div>
   </div>
 </section>
@@ -448,113 +504,111 @@ footer a:hover { color: var(--accent); }
   <div class="reveal" style="text-align:center">
     <p class="section-label">Pricing</p>
     <h2 class="section-title">Simple, transparent pricing</h2>
-    <p class="section-sub">No hidden fees. No hourly billing. Fixed packages so you know exactly what you're getting.</p>
+    <p class="section-sub">No hidden fees. No hourly billing. Pay online via credit card.</p>
   </div>
-
-  <div class="services-grid reveal">
+  <div class="pricing-grid reveal">
     <!-- Chatbot Basic -->
-    <div class="service-card">
-      <h3>💬 ChatBot Basic</h3>
-      <p>FAQ chatbot for Telegram. Perfect for small businesses starting with AI.</p>
-      <div class="service-price">$1,000 <span>one-time</span></div>
-      <ul class="service-features">
-        <li>50 Q&A knowledge base</li>
-        <li>Telegram deployment</li>
-        <li>1 language</li>
-        <li>3-day delivery</li>
-        <li>30-day support</li>
+    <div class="pricing-card">
+      <div class="pricing-icon"><svg><use href="#icon-robot"/></svg></div>
+      <h3>ChatBot Basic</h3>
+      <p class="pricing-desc">FAQ chatbot for Telegram. Perfect for small businesses starting with AI.</p>
+      <div class="pricing-price">$1,000 <span>one-time</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>50 Q&A knowledge base</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Telegram deployment</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>1 language</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>3-day delivery</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('chatbot_basic')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Chatbot Premium -->
-    <div class="service-card" style="border-color: var(--accent);">
-      <span style="background:var(--accent);color:white;font-size:0.75em;padding:4px 10px;border-radius:100px;font-weight:600;display:inline-block;margin-bottom:16px">MOST POPULAR</span>
-      <h3>💬 ChatBot Premium</h3>
-      <p>Full AI chatbot with website widget, multi-language, and custom training.</p>
-      <div class="service-price">$3,000 <span>one-time</span></div>
-      <ul class="service-features">
-        <li>200+ Q&A knowledge base</li>
-        <li>Website + Telegram + WeChat</li>
-        <li>3+ languages</li>
-        <li>7-day delivery</li>
-        <li>Unlimited revisions</li>
+    <div class="pricing-card popular">
+      <div class="popular-badge">MOST POPULAR</div>
+      <div class="pricing-icon"><svg><use href="#icon-robot"/></svg></div>
+      <h3>ChatBot Premium</h3>
+      <p class="pricing-desc">Full AI chatbot with website widget, multi-language, and custom training.</p>
+      <div class="pricing-price">$3,000 <span>one-time</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>200+ Q&A knowledge base</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Website + Telegram + WeChat</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>3+ languages</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Unlimited revisions</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('chatbot_premium')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Content Starter -->
-    <div class="service-card">
-      <h3>📝 Content Starter</h3>
-      <li>10 blog posts/month</li>
-        <li>30 social posts/month</li>
-        <li>2 email newsletters/month</li>
-        <li>Content calendar</li>
+    <div class="pricing-card">
+      <div class="pricing-icon"><svg><use href="#icon-content"/></svg></div>
+      <h3>Content Starter</h3>
+      <p class="pricing-desc">AI content for growing businesses. 10 blog posts + 30 social posts/month.</p>
+      <div class="pricing-price">$500 <span>/month</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>10 blog posts/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>30 social posts/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>2 email newsletters/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Content calendar</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('content_starter')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Content Pro -->
-    <div class="service-card">
-      <h3>📝 Content Pro</h3>
-      <p>Full content pipeline for scaling businesses. 3x more content.</p>
-      <div class="service-price">$1,500 <span>/month</span></div>
-      <ul class="service-features">
-        <li>30 blog posts/month</li>
-        <li>90 social posts/month</li>
-        <li>4 email newsletters/month</li>
-        <li>Monthly strategy call</li>
-        <li>Competitor analysis</li>
+    <div class="pricing-card">
+      <div class="pricing-icon"><svg><use href="#icon-content"/></svg></div>
+      <h3>Content Pro</h3>
+      <p class="pricing-desc">Full content pipeline for scaling businesses. 3x more content.</p>
+      <div class="pricing-price">$1,500 <span>/month</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>30 blog posts/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>90 social posts/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>4 email newsletters/month</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Monthly strategy call</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('content_pro')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Data Basic -->
-    <div class="service-card">
-      <h3>📊 Data Basic</h3>
-      <p>Automated reporting from one data source. Weekly reports delivered.</p>
-      <div class="service-price">$500 <span>one-time</span></div>
-      <ul class="service-features">
-        <li>1 data source</li>
-        <li>3 dashboard pages</li>
-        <li>Weekly reports</li>
-        <li>Basic visualizations</li>
+    <div class="pricing-card">
+      <div class="pricing-icon"><svg><use href="#icon-data"/></svg></div>
+      <h3>Data Basic</h3>
+      <p class="pricing-desc">Automated reporting from one data source. Weekly reports delivered.</p>
+      <div class="pricing-price">$500 <span>one-time</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>1 data source</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>3 dashboard pages</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Weekly reports</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('data_basic')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Data Pro -->
-    <div class="service-card">
-      <h3>📊 Data Pro</h3>
-      <p>Multi-source data pipeline with real-time dashboard and AI insights.</p>
-      <div class="service-price">$2,000 <span>one-time</span></div>
-      <ul class="service-features">
-        <li>5+ data sources</li>
-        <li>15+ dashboard pages</li>
-        <li>Real-time dashboard</li>
-        <li>AI-generated insights</li>
-        <li>Competitor monitoring</li>
+    <div class="pricing-card">
+      <div class="pricing-icon"><svg><use href="#icon-data"/></svg></div>
+      <h3>Data Pro</h3>
+      <p class="pricing-desc">Multi-source data pipeline with real-time dashboard and AI insights.</p>
+      <div class="pricing-price">$2,000 <span>one-time</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>5+ data sources</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>15+ dashboard pages</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Real-time dashboard</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>AI-generated insights</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('data_pro')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
-
     <!-- Full Stack -->
-    <div class="service-card" style="border-color: var(--accent);">
-      <span style="background:var(--accent);color:white;font-size:0.75em;padding:4px 10px;border-radius:100px;font-weight:600;display:inline-block;margin-bottom:16px">BEST VALUE</span>
-      <h3>🚀 Full AI Stack</h3>
-      <p>Everything. Chatbot + Content + Analytics. For serious growth.</p>
-      <div class="service-price">$5,000 <span>/month</span></div>
-      <ul class="service-features">
-        <li>Full AI chatbot (all channels)</li>
-        <li>Unlimited content production</li>
-        <li>Full data dashboard</li>
-        <li>Weekly strategy calls</li>
-        <li>Priority support</li>
-        <li>Dedicated Slack channel</li>
+    <div class="pricing-card popular">
+      <div class="popular-badge">BEST VALUE</div>
+      <div class="pricing-icon"><svg><use href="#icon-rocket"/></svg></div>
+      <h3>Full AI Stack</h3>
+      <p class="pricing-desc">Everything. Chatbot + Content + Analytics. For serious growth.</p>
+      <div class="pricing-price">$5,000 <span>/month</span></div>
+      <ul class="pricing-features">
+        <li><svg class="check"><use href="#icon-check"/></svg>Full AI chatbot (all channels)</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Unlimited content production</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Full data dashboard</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Weekly strategy calls</li>
+        <li><svg class="check"><use href="#icon-check"/></svg>Priority support</li>
       </ul>
-      <button class="btn-primary" style="width:100%;justify-content:center" onclick="startCheckout('full_stack')">Buy Now →</button>
+      <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
   </div>
+  <p style="text-align:center;margin-top:32px;color:var(--muted);font-size:0.85em;">Secure payment via Stripe. All prices in USD.</p>
 </section>
 
 <!-- FAQ -->
@@ -565,24 +619,24 @@ footer a:hover { color: var(--accent); }
   </div>
   <div class="faq-list reveal">
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <h4>How long does a chatbot take to build?</h4>
-      <p>Most chatbots are live within 3–7 days. The speed depends on how much content you have to train it on. If you have an FAQ or knowledge base, it's fast. If we start from scratch, it takes a bit longer.</p>
+      <h4>How long does a chatbot take to build? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
+      <p>Most chatbots are live within 3–7 days. The speed depends on how much content you have to train it on. If you have an FAQ or knowledge base, it's fast.</p>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <h4>Will the chatbot sound like a robot?</h4>
-      <p>No. I train it on your specific tone, products, and brand voice. It sounds like a knowledgeable member of your team, not a generic AI.</p>
+      <h4>Will the chatbot sound like a robot? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
+      <p>No. I train it on your specific tone, products, and brand voice. It sounds like a knowledgeable member of your team.</p>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <h4>What payment methods do you accept?</h4>
+      <h4>What payment methods do you accept? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
       <p>All major credit cards via Stripe. For enterprise projects, I can invoice via bank transfer.</p>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <h4>Do I need technical skills?</h4>
-      <p>No. Everything I build is designed to be managed without code. You'll get a simple dashboard to update the knowledge base, view analytics, and make changes.</p>
+      <h4>Do I need technical skills? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
+      <p>No. Everything I build is designed to be managed without code. You'll get a simple dashboard to update and view analytics.</p>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
-      <h4>What's the cancellation policy?</h4>
-      <p>Monthly plans can be cancelled anytime with 30 days notice. One-time projects include 30 days of free support after launch. No contracts.</p>
+      <h4>What's the cancellation policy? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
+      <p>Monthly plans can be cancelled anytime. One-time projects include 30 days of free support after launch. No contracts.</p>
     </div>
   </div>
 </section>
@@ -596,8 +650,8 @@ footer a:hover { color: var(--accent); }
 </section>
 
 <footer>
-  <p>© 2026 AI Automation Agency · Built with AI 🤖 · <a href="https://joseph-li7.github.io/ai-agency-landing/success.html" style="color:var(--muted)">Payment Success</a></p>
-  <div style="display:flex;gap:24px">
+  <p>© 2026 AI Automation Agency · Built with AI 🤖</p>
+  <div class="footer-links">
     <a href="#services">Services</a>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
@@ -605,107 +659,36 @@ footer a:hover { color: var(--accent); }
   </div>
 </footer>
 
-<!-- TOAST -->
 <div id="toast" class="toast"></div>
 
 <script>
-// ===== STRIPE CONFIG =====
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51TQAWoJHRT3J7WxS4CGf4cdZ3iaO7KkuPV5ZOygDwSTfxbpftPlfJBnnN7Psg2hdThWHef1euBVrbYt64bAlTbNn00T64OD43B';
-const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-
-// Price IDs from Stripe Dashboard
-const PRICE_IDS = {
-  chatbot_basic:    'price_1TQPoPJHRT3J7WxSZ7KA3GP2',
-  chatbot_premium:  'price_1TQPoSJHRT3J7WxS7bbUJQ1W',
-  content_starter:  'price_1TQPoUJHRT3J7WxSOBzjlSR7',
-  content_pro:      'price_1TQPoXJHRT3J7WxScHuz07oI',
-  data_basic:       'price_1TQPoZJHRT3J7WxSZxiRsGXG',
-  data_pro:         'price_1TQPobJHRT3J7WxS7iWizx7c',
-  full_stack:       'price_1TQPoeJHRT3J7WxSQ54idvRi',
-};
-
-// Quick checkout from service cards (defaults)
-const SERVICE_DEFAULTS = {
-  chatbot:  'chatbot_premium',
-  content:  'content_pro',
-  data:     'data_pro',
-};
-
-async function startCheckout(service) {
-  const priceKey = SERVICE_DEFAULTS[service] || service;
-  const priceId = PRICE_IDS[priceKey];
-  if (!priceId) {
-    showToast('Invalid service selected', 'error');
-    return;
-  }
-
-  // Find the button that was clicked and show loading
-  const btn = event.target.closest('button');
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner"></span> Processing...';
-  }
-
-  try {
-    // Create Checkout Session via Stripe API
-    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + STRIPE_PUBLISHABLE_KEY,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        'line_items[0][price]': priceId,
-        'line_items[0][quantity]': '1',
-        'mode': priceKey.includes('starter') || priceKey.includes('pro') && !priceKey.includes('chatbot') && !priceKey.includes('data') ? 'subscription' : 'payment',
-        'success_url': 'https://joseph-li7.github.io/ai-agency-landing/success.html?session_id={CHECKOUT_SESSION_ID}',
-        'cancel_url': 'https://joseph-li7.github.io/ai-agency-landing/#pricing',
-        'payment_intent_data[description]': 'AI Automation Agency - ' + priceKey,
-        'billing_address_collection': 'required',
-        'customer_email': '',
-      }).toString()
-    });
-
-    const session = await response.json();
-
-    if (session.error) {
-      showToast('Payment error: ' + session.error.message, 'error');
-      if (btn) { btn.disabled = false; btn.innerHTML = 'Buy Now →'; }
-      return;
-    }
-
-    // Redirect to Stripe Checkout
-    const result = await stripe.redirectToCheckout({ sessionId: session.id });
-    if (result.error) {
-      showToast(result.error.message, 'error');
-      if (btn) { btn.disabled = false; btn.innerHTML = 'Buy Now →'; }
-    }
-  } catch (err) {
-    showToast('Connection error. Please try again.', 'error');
-    if (btn) { btn.disabled = false; btn.innerHTML = 'Buy Now →'; }
-  }
+function openContact(service) {
+  // 滚动到 pricing 区域
+  document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
+  // 高亮对应卡片
+  showToast('Choose a package below to get started!', 'success');
 }
 
 function showToast(msg, type) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg;
   t.className = 'toast show' + (type ? ' ' + type : '');
-  setTimeout(() => t.className = 'toast', 4000);
+  setTimeout(function(){ t.className = 'toast'; }, 4000);
 }
 
 // Nav scroll
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function(){
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });
 
 // Scroll reveal
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){ e.target.classList.add('visible'); observer.unobserve(e.target); }
   });
 }, { threshold: 0.1 });
-reveals.forEach(el => observer.observe(el));
+reveals.forEach(function(el){ observer.observe(el); });
 </script>
 </body>
 </html>
