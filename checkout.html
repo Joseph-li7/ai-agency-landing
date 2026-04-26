@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — AI Automation Agency</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #faf9f7; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.checkout-card { background: white; border-radius: 16px; padding: 32px; max-width: 480px; width: 100%; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+h1 { font-size: 1.5em; margin-bottom: 8px; }
+.subtitle { color: #666; margin-bottom: 24px; }
+.service-select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1em; margin-bottom: 16px; }
+.price-display { font-size: 2em; font-weight: 700; color: #e8440a; margin: 16px 0; }
+button { width: 100%; background: #e8440a; color: white; border: none; padding: 16px; border-radius: 100px; font-size: 1.1em; font-weight: 600; cursor: pointer; }
+button:hover { background: #c43a08; }
+.back { display: block; text-align: center; margin-top: 16px; color: #666; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="checkout-card">
+  <h1>Complete Your Order</h1>
+  <p class="subtitle">Select your service package</p>
+  
+  <select class="service-select" id="serviceSelect">
+    <option value="chatbot-basic">AI Chatbot — Basic ($1,000)</option>
+    <option value="chatbot-premium">AI Chatbot — Premium ($3,000)</option>
+    <option value="content-starter">Content Automation — Starter ($500/mo)</option>
+    <option value="content-pro">Content Automation — Pro ($1,500/mo)</option>
+    <option value="data-basic">Data Dashboard — Basic ($500)</option>
+    <option value="data-pro">Data Dashboard — Pro ($2,000)</option>
+    <option value="full-stack">Full AI Stack ($2,500/mo)</option>
+  </select>
+  
+  <div class="price-display" id="priceDisplay">$1,000</div>
+  
+  <button id="checkoutBtn">Pay Now with Stripe</button>
+  <a href="/" class="back">← Back to Home</a>
+</div>
+
+<script>
+const prices = {
+  'chatbot-basic': 1000,
+  'chatbot-premium': 3000,
+  'content-starter': 500,
+  'content-pro': 1500,
+  'data-basic': 500,
+  'data-pro': 2000,
+  'full-stack': 2500
+};
+
+const stripe = Stripe('pk_test_51TQAWoJHRT3J7WxS4CGf4cdZ3iaO7KkuPV5ZOygDwSTfxbpftPlfJBnnN7Psg2hdThWHef1euBVrbYt64bAlTbNn00T64OD43B');
+
+document.getElementById('serviceSelect').addEventListener('change', (e) => {
+  document.getElementById('priceDisplay').textContent = '$' + prices[e.target.value].toLocaleString();
+});
+
+document.getElementById('checkoutBtn').addEventListener('click', async () => {
+  const service = document.getElementById('serviceSelect').value;
+  const btn = document.getElementById('checkoutBtn');
+  btn.textContent = 'Processing...';
+  btn.disabled = true;
+
+  try {
+    const response = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ service })
+    });
+    const { url } = await response.json();
+    window.location.href = url;
+  } catch (err) {
+    alert('Something went wrong. Please try again.');
+    btn.textContent = 'Pay Now with Stripe';
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
