@@ -403,8 +403,8 @@ footer .footer-links { display: flex; gap: 24px; }
     <h1>Custom AI that<br><em>grows your business</em></h1>
     <p class="hero-sub">I build AI chatbots, automate content, and create data systems — tailored to your business. Results in days, not months.</p>
     <div class="hero-actions">
-      <a href="#pricing" class="btn-primary">View Pricing →</a>
-      <a href="#services" class="btn-secondary">See Services</a>
+      <a href="ai-audit.html" class="btn-primary">🤖 Free AI Audit →</a>
+      <a href="#pricing" class="btn-secondary">View Pricing</a>
     </div>
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">70%+</div><div class="stat-label">Support tickets deflected</div></div>
@@ -472,6 +472,16 @@ footer .footer-links { display: flex; gap: 24px; }
       </ul>
       <button class="btn-primary" style="width:100%;justify-content:center" onclick="openContact('data')">Build dashboard <svg class="icon arrow"><use href="#icon-arrow"/></svg></button>
     </div>
+  </div>
+</section>
+
+<!-- FREE AUDIT CTA -->
+<section class="section" id="audit">
+  <div class="reveal" style="text-align:center">
+    <p class="section-label">Free Tool</p>
+    <h2 class="section-title">Discover your automation potential</h2>
+    <p class="section-sub">Take a 2-minute quiz. Get a personalized AI automation report with estimated savings — free, no email required.</p>
+    <a href="ai-audit.html" class="btn-primary" style="font-size:1.05em">🤖 Start Free AI Audit →</a>
   </div>
 </section>
 
@@ -608,7 +618,36 @@ footer .footer-links { display: flex; gap: 24px; }
       <a href="https://buy.stripe.com/test_3csdR6f0N0xK6as144" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Buy Now →</a>
     </div>
   </div>
-  <p style="text-align:center;margin-top:32px;color:var(--muted);font-size:0.85em;">Secure payment via Stripe. All prices in USD.</p>
+  <p style="text-align:center;margin-top:32px;color:var(--muted);font-size:0.85em;">Pay via Wise (bank transfer / card) or USDT (X Layer). All prices in USD.</p>
+</section>
+
+<!-- PAYMENT METHODS -->
+<section class="section" id="payment">
+  <div class="reveal" style="text-align:center">
+    <p class="section-label">Payment</p>
+    <h2 class="section-title">Two ways to pay</h2>
+    <p class="section-sub">Choose whichever is convenient for you.</p>
+  </div>
+  <div class="pricing-grid reveal" style="max-width:680px;margin:0 auto">
+    <div class="pricing-card" style="text-align:center">
+      <div style="font-size:2.5em;margin-bottom:12px">💳</div>
+      <h3>Pay with Wise</h3>
+      <p class="pricing-desc">Credit card or bank transfer. Fast, secure, low fees. Supports 40+ currencies.</p>
+      <a href="https://wise.com/pay/me/haoweil46?utm_source=request_flow" class="btn-primary" style="width:100%;justify-content:center" target="_blank" rel="noopener">Pay with Wise →</a>
+    </div>
+    <div class="pricing-card" style="text-align:center">
+      <div style="font-size:2.5em;margin-bottom:12px">₮</div>
+      <h3>Pay with USDT</h3>
+      <p class="pricing-desc">Cryptocurrency payment via OKX. USDT on X Layer network. No middleman, no borders, near-zero fees.</p>
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="showCryptoAddress()">Show Wallet Address →</button>
+    </div>
+  </div>
+  <div id="crypto-address-box" style="display:none;max-width:680px;margin:24px auto 0;background:#f0ede8;border-radius:12px;padding:20px;text-align:center">
+    <p style="font-size:0.85em;color:var(--muted);margin-bottom:8px">USDT (X Layer) — Send to this address:</p>
+    <code id="wallet-addr" style="display:block;font-size:0.85em;word-break:break-all;background:#e8e4df;padding:12px;border-radius:8px;cursor:pointer" onclick="copyWallet()">XKOa016b2833cAca757e74765FB62D54abEf3900806</code>
+    <p style="font-size:0.75em;color:var(--muted);margin-top:8px">⚠️ Send <strong>only USDT via X Layer</strong> network. Other assets or networks may result in loss.</p>
+    <p style="font-size:0.75em;color:var(--muted);margin-top:4px">Click address to copy. After sending, message me with the TX hash.</p>
+  </div>
 </section>
 
 <!-- FAQ -->
@@ -628,7 +667,7 @@ footer .footer-links { display: flex; gap: 24px; }
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
       <h4>What payment methods do you accept? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
-      <p>All major credit cards via Stripe. For enterprise projects, I can invoice via bank transfer.</p>
+      <p>We accept payments via Wise (credit card / bank transfer) and USDT cryptocurrency. Choose whichever works best for you. For enterprise projects, I can also invoice directly.</p>
     </div>
     <div class="faq-item" onclick="this.classList.toggle('open')">
       <h4>Do I need technical skills? <svg class="toggle"><use href="#icon-plus"/></svg></h4>
@@ -644,9 +683,10 @@ footer .footer-links { display: flex; gap: 24px; }
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <h2>Ready to automate your business?</h2>
-  <p>Start with a single service or go all-in with the Full AI Stack.</p>
-  <a href="#pricing" class="btn-primary" style="font-size:1.1em">View Pricing →</a>
-  <p style="margin-top:24px;font-size:0.85em;color:rgba(255,255,255,0.4)">Max 2 new clients per month. Secure payment via Stripe.</p>
+  <p>Start with a free AI audit — discover exactly where you can save time and money.</p>
+  <a href="ai-audit.html" class="btn-primary" style="font-size:1.1em">🤖 Start Free Audit →</a>
+  <p style="margin-top:16px;font-size:0.9em;color:rgba(255,255,255,0.5)">No email required. Takes 2 minutes. Get instant results.</p>
+  <p style="margin-top:24px;font-size:0.85em;color:rgba(255,255,255,0.4)">Max 2 new clients per month. Pay via Wise or USDT.</p>
 </section>
 
 <footer>
@@ -663,10 +703,35 @@ footer .footer-links { display: flex; gap: 24px; }
 
 <script>
 function openContact(service) {
-  // 滚动到 pricing 区域
   document.getElementById('pricing').scrollIntoView({behavior: 'smooth'});
-  // 高亮对应卡片
   showToast('Choose a package below to get started!', 'success');
+}
+
+function showCryptoAddress() {
+  var box = document.getElementById('crypto-address-box');
+  if(box.style.display === 'none') {
+    box.style.display = 'block';
+    box.scrollIntoView({behavior: 'smooth', block: 'center'});
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function copyWallet() {
+  var addr = 'XKOa016b2833cAca757e74765FB62D54abEf3900806';
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(addr).then(function(){
+      showToast('Wallet address copied!', 'success');
+    });
+  } else {
+    var t = document.createElement('textarea');
+    t.value = addr;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+    showToast('Wallet address copied!', 'success');
+  }
 }
 
 function showToast(msg, type) {

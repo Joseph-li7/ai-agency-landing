@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free AI Audit — Discover Automation Opportunities</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --ink: #faf9f7;
+  --accent: #e8440a;
+  --accent-dark: #c43a08;
+  --muted: #787468;
+  --border: #2a2824;
+  --card: #141311;
+  --radius: 16px;
+  --green: #22c55e;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PROGRESS BAR */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--border); z-index: 100;
+}
+.progress-fill {
+  height: 100%; background: linear-gradient(90deg, var(--accent), #f97316);
+  transition: width 0.5s ease; width: 0%;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 80px 24px 120px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.header .badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(232,68,10,0.1); border: 1px solid rgba(232,68,10,0.2);
+  padding: 6px 16px; border-radius: 100px;
+  font-size: 0.8em; color: var(--accent); margin-bottom: 24px;
+  font-weight: 500;
+}
+.header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8em, 5vw, 2.8em);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.header p {
+  color: var(--muted);
+  font-size: 1.05em;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* STEPS */
+.step {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+.step.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.step-label {
+  font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; margin-bottom: 12px;
+}
+.step h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.step .subtitle {
+  color: var(--muted);
+  font-size: 0.95em;
+  margin-bottom: 32px;
+}
+
+/* OPTIONS GRID */
+.options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.option {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+.option:hover {
+  border-color: var(--accent);
+  background: rgba(232,68,10,0.05);
+}
+.option.selected {
+  border-color: var(--accent);
+  background: rgba(232,68,10,0.1);
+}
+.option .opt-icon {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+}
+.option .opt-title {
+  font-weight: 600;
+  font-size: 0.95em;
+  margin-bottom: 4px;
+}
+.option .opt-desc {
+  font-size: 0.8em;
+  color: var(--muted);
+}
+
+/* FORM ELEMENTS */
+.input-group {
+  margin-bottom: 20px;
+}
+.input-group label {
+  display: block;
+  font-size: 0.85em;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+.input-group input,
+.input-group select,
+.input-group textarea {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1em;
+  transition: border-color 0.2s;
+}
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.input-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* SLIIDER */
+.slider-container {
+  margin-bottom: 24px;
+}
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.slider-header label {
+  font-size: 0.85em;
+  font-weight: 500;
+  color: var(--muted);
+}
+.slider-value {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  color: var(--accent);
+  font-size: 1.1em;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid var(--bg);
+}
+
+/* BUTTONS */
+.buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+.btn-next {
+  flex: 1;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-next:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-back {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--ink); color: var(--ink); }
+
+/* REPORT */
+.report-section {
+  display: none;
+}
+.report-section.active {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+.report-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.report-header .score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 16px 28px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+.score-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.5em;
+  font-weight: 800;
+  color: var(--accent);
+}
+.score-label {
+  font-size: 0.85em;
+  color: var(--muted);
+  text-align: left;
+  line-height: 1.4;
+}
+.report-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.report-header p {
+  color: var(--muted);
+  font-size: 0.95em;
+}
+
+/* FINDINGS */
+.finding {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.finding-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.finding-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+.finding-icon.high { background: rgba(232,68,10,0.15); }
+.finding-icon.medium { background: rgba(234,179,8,0.15); }
+.finding-icon.low { background: rgba(34,197,94,0.15); }
+.finding-title {
+  font-weight: 600;
+  font-size: 1em;
+}
+.finding-priority {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: auto;
+}
+.finding-priority.high { background: rgba(232,68,10,0.15); color: var(--accent); }
+.finding-priority.medium { background: rgba(234,179,8,0.15); color: var(--yellow); }
+.finding-priority.low { background: rgba(34,197,94,0.15); color: var(--green); }
+.finding p {
+  color: var(--muted);
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+.finding .savings {
+  margin-top: 10px;
+  font-size: 0.85em;
+  color: var(--green);
+  font-weight: 500;
+}
+
+/* RECOMMENDATION BOX */
+.recommendation {
+  background: linear-gradient(135deg, rgba(232,68,10,0.08), rgba(249,115,22,0.05));
+  border: 1px solid rgba(232,68,10,0.2);
+  border-radius: 14px;
+  padding: 28px;
+  margin: 24px 0;
+}
+.recommendation h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1em;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.recommendation p {
+  color: var(--muted);
+  font-size: 0.9em;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.recommendation .cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-cta {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.btn-cta-outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.95em;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-cta-outline:hover { border-color: var(--ink); }
+
+/* EMAIL CAPTURE */
+.email-capture {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  text-align: center;
+  margin-top: 24px;
+}
+.email-capture h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+.email-capture p {
+  color: var(--muted);
+  font-size: 0.85em;
+  margin-bottom: 20px;
+}
+.email-form {
+  display: flex;
+  gap: 8px;
+}
+.email-form input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95em;
+}
+.email-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.email-form button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .options { grid-template-columns: 1fr; }
+  .email-form { flex-direction: column; }
+  .container { padding: 60px 16px 80px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header" id="headerSection">
+    <div class="badge">🤖 Free AI Audit — 2 minutes</div>
+    <h1>Discover how much you can save with AI automation</h1>
+    <p>Answer a few questions about your business. Get a personalized automation report with estimated savings.</p>
+  </div>
+
+  <!-- STEP 1: Industry -->
+  <div class="step active" id="step1">
+    <p class="step-label">Step 1 of 5</p>
+    <h2>What industry are you in?</h2>
+    <p class="subtitle">This helps me understand your specific automation opportunities.</p>
+    <div class="options">
+      <div class="option" onclick="selectOption(this, 'industry', 'ecommerce')">
+        <div class="opt-icon">🛒</div>
+        <div class="opt-title">E-commerce / Retail</div>
+        <div class="opt-desc">Online store, DTC brand, marketplace seller</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'industry', 'saas')">
+        <div class="opt-icon">💻</div>
+        <div class="opt-title">SaaS / Tech</div>
+        <div class="opt-desc">Software product, app, platform</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'industry', 'service')">
+        <div class="opt-icon">🏢</div>
+        <div class="opt-title">Service Business</div>
+        <div class="opt-desc">Agency, consulting, restaurant, local biz</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'industry', 'creator')">
+        <div class="opt-icon">🎨</div>
+        <div class="opt-title">Creator / Content</div>
+        <div class="opt-desc">YouTube, newsletter, social media, blog</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'industry', 'realestate')">
+        <div class="opt-icon">🏠</div>
+        <div class="opt-title">Real Estate</div>
+        <div class="opt-desc">Agent, brokerage, property management</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'industry', 'other')">
+        <div class="opt-icon">🔧</div>
+        <div class="opt-title">Other</div>
+        <div class="opt-desc">Something else — I'll specify later</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="btn-next" id="btn1" onclick="nextStep(2)" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Biggest Pain -->
+  <div class="step" id="step2">
+    <p class="step-label">Step 2 of 5</p>
+    <h2>What's your biggest time drain?</h2>
+    <p class="subtitle">Pick the one that frustrates you most.</p>
+    <div class="options">
+      <div class="option" onclick="selectOption(this, 'pain', 'support')">
+        <div class="opt-icon">💬</div>
+        <div class="opt-title">Customer support</div>
+        <div class="opt-desc">Answering the same questions over and over</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'pain', 'content')">
+        <div class="opt-icon">📝</div>
+        <div class="opt-title">Content creation</div>
+        <div class="opt-desc">Posts, emails, blogs — takes forever</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'pain', 'data')">
+        <div class="opt-icon">📊</div>
+        <div class="opt-title">Data & reporting</div>
+        <div class="opt-desc">Manually compiling reports and dashboards</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'pain', 'leads')">
+        <div class="opt-icon">🎯</div>
+        <div class="opt-title">Lead gen & outreach</div>
+        <div class="opt-desc">Finding and contacting potential clients</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'pain', 'admin')">
+        <div class="opt-icon">📋</div>
+        <div class="opt-title">Admin & operations</div>
+        <div class="opt-desc">Invoicing, scheduling, data entry, emails</div>
+      </div>
+      <div class="option" onclick="selectOption(this, 'pain', 'all')">
+        <div class="opt-icon">🔥</div>
+        <div class="opt-title">All of the above</div>
+        <div class="opt-desc">Everything is manual and slow</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="btn-back" onclick="prevStep(1)">← Back</button>
+      <button class="btn-next" id="btn2" onclick="nextStep(3)" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Team Size & Revenue -->
+  <div class="step" id="step3">
+    <p class="step-label">Step 3 of 5</p>
+    <h2>How big is your operation?</h2>
+    <p class="subtitle">This helps estimate the scale of savings.</p>
+    <div class="slider-container">
+      <div class="slider-header">
+        <label>Team size (including yourself)</label>
+        <span class="slider-value" id="teamValue">5 people</span>
+      </div>
+      <input type="range" min="1" max="50" value="5" id="teamSlider" oninput="updateSlider('team')">
+    </div>
+    <div class="slider-container">
+      <div class="slider-header">
+        <label>Monthly revenue (USD)</label>
+        <span class="slider-value" id="revenueValue">$10,000</span>
+      </div>
+      <input type="range" min="0" max="100000" value="10000" step="1000" id="revenueSlider" oninput="updateSlider('revenue')">
+    </div>
+    <div class="buttons">
+      <button class="btn-back" onclick="prevStep(2)">← Back</button>
+      <button class="btn-next" onclick="nextStep(4)">Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Current Tools -->
+  <div class="step" id="step4">
+    <p class="step-label">Step 4 of 5</p>
+    <h2>What tools do you currently use?</h2>
+    <p class="subtitle">Select all that apply.</p>
+    <div class="options">
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'none')">
+        <div class="opt-icon">📱</div>
+        <div class="opt-title">Just spreadsheets & email</div>
+        <div class="opt-desc">Most things are manual</div>
+      </div>
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'crm')">
+        <div class="opt-icon">📇</div>
+        <div class="opt-title">CRM (HubSpot, Salesforce)</div>
+        <div class="opt-desc">Customer management system</div>
+      </div>
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'shopify')">
+        <div class="opt-icon">🛍️</div>
+        <div class="opt-title">Shopify / WooCommerce</div>
+        <div class="opt-desc">E-commerce platform</div>
+      </div>
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'notion')">
+        <div class="opt-icon">📓</div>
+        <div class="opt-title">Notion / Airtable</div>
+        <div class="opt-desc">Project management & databases</div>
+      </div>
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'zapier')">
+        <div class="opt-icon">⚡</div>
+        <div class="opt-title">Zapier / Make / n8n</div>
+        <div class="opt-desc">Already using some automation</div>
+      </div>
+      <div class="option multi" onclick="toggleMulti(this, 'tools', 'chatbot')">
+        <div class="opt-icon">🤖</div>
+        <div class="opt-title">Chatbot (basic)</div>
+        <div class="opt-desc">Simple FAQ bot</div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="btn-back" onclick="prevStep(3)">← Back</button>
+      <button class="btn-next" id="btn4" onclick="nextStep(5)" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Contact Info -->
+  <div class="step" id="step5">
+    <p class="step-label">Step 5 of 5</p>
+    <h2>Where should I send your report?</h2>
+    <p class="subtitle">I'll also include a free implementation plan.</p>
+    <div class="input-group">
+      <label>Your name</label>
+      <input type="text" id="userName" placeholder="John Smith">
+    </div>
+    <div class="input-group">
+      <label>Email address</label>
+      <input type="email" id="userEmail" placeholder="john@company.com">
+    </div>
+    <div class="input-group">
+      <label>Company / Website (optional)</label>
+      <input type="text" id="userCompany" placeholder="Acme Inc.">
+    </div>
+    <div class="input-group">
+      <label>Anything specific you want me to look at?</label>
+      <textarea id="userNotes" placeholder="E.g., We get 200 customer emails per day and it takes 3 hours to answer them..."></textarea>
+    </div>
+    <div class="buttons">
+      <button class="btn-back" onclick="prevStep(4)">← Back</button>
+      <button class="btn-next" onclick="generateReport()">Generate My Report →</button>
+    </div>
+  </div>
+
+  <!-- REPORT -->
+  <div class="report-section" id="reportSection">
+    <div class="report-header">
+      <div class="score-badge">
+        <div class="score-num" id="scoreNum">73</div>
+        <div class="score-label">Automation<br>Potential Score</div>
+      </div>
+      <h2 id="reportTitle">High AI Automation Potential</h2>
+      <p id="reportSubtitle">Based on your answers, you could save 15+ hours per week with AI.</p>
+    </div>
+
+    <div id="findingsContainer"></div>
+
+    <div class="recommendation">
+      <h3>🎯 Recommended for you</h3>
+      <p id="recText">Based on your specific situation, I recommend starting with an AI chatbot to handle customer inquiries. This alone could save your team 10+ hours per week.</p>
+      <div class="cta-row">
+        <a href="../index.html#pricing" class="btn-cta">View Packages →</a>
+        <a href="mailto:hello@aibr.agency?subject=AI Audit Follow-up" class="btn-cta-outline">Book Free Call</a>
+      </div>
+    </div>
+
+    <div class="email-capture">
+      <h3>📩 Get the full report + implementation plan</h3>
+      <p>I'll send a detailed PDF with step-by-step automation recommendations.</p>
+      <div class="email-form">
+        <input type="email" id="reportEmail" placeholder="your@email.com">
+        <button onclick="sendReport()">Send Report</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// State
+const state = {
+  industry: '',
+  pain: '',
+  team: 5,
+  revenue: 10000,
+  tools: [],
+  name: '',
+  email: '',
+  company: '',
+  notes: ''
+};
+
+let currentStep = 1;
+const totalSteps = 5;
+
+// Option selection
+function selectOption(el, key, value) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state[key] = value;
+  document.getElementById('btn' + currentStep).disabled = false;
+}
+
+// Multi-select
+function toggleMulti(el, key, value) {
+  el.classList.toggle('selected');
+  if (state.tools.includes(value)) {
+    state.tools = state.tools.filter(t => t !== value);
+  } else {
+    state.tools.push(value);
+  }
+  document.getElementById('btn' + currentStep).disabled = state.tools.length === 0;
+}
+
+// Sliders
+function updateSlider(type) {
+  if (type === 'team') {
+    const v = document.getElementById('teamSlider').value;
+    state.team = parseInt(v);
+    document.getElementById('teamValue').textContent = v + (v == 1 ? ' person' : ' people');
+  } else {
+    const v = document.getElementById('revenueSlider').value;
+    state.revenue = parseInt(v);
+    document.getElementById('revenueValue').textContent = '$' + parseInt(v).toLocaleString();
+  }
+}
+
+// Navigation
+function updateProgress() {
+  const pct = ((currentStep - 1) / totalSteps) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function nextStep(n) {
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step' + n).classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function prevStep(n) {
+  document.getElementById('step' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('step' + n).classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Generate Report
+function generateReport() {
+  state.name = document.getElementById('userName').value || 'there';
+  state.email = document.getElementById('userEmail').value || '';
+  state.company = document.getElementById('userCompany').value || 'your business';
+  state.notes = document.getElementById('userNotes').value || '';
+
+  // Calculate score
+  let score = 50;
+  if (state.pain === 'all' || state.pain === 'support') score += 15;
+  else if (state.pain === 'content' || state.pain === 'data') score += 12;
+  else score += 8;
+  if (state.team >= 5) score += 10;
+  if (state.team >= 20) score += 5;
+  if (state.revenue >= 50000) score += 8;
+  if (state.tools.includes('none')) score += 5;
+  if (state.tools.includes('chatbot')) score -= 5; // already has some automation
+  score = Math.min(95, Math.max(45, score));
+
+  // Generate findings
+  const findings = [];
+
+  // Pain-based findings
+  if (state.pain === 'support' || state.pain === 'all') {
+    findings.push({
+      icon: '💬', title: 'AI Customer Support Chatbot',
+      priority: 'high',
+      priorityLabel: 'HIGH IMPACT',
+      text: 'A custom AI chatbot trained on your FAQ and product info could handle 60-80% of routine customer inquiries instantly — 24/7, in multiple languages.',
+      savings: 'Estimated savings: 15-20 hrs/week of support team time'
+    });
+  }
+  if (state.pain === 'content' || state.pain === 'all') {
+    findings.push({
+      icon: '📝', title: 'AI Content Pipeline',
+      priority: 'high',
+      priorityLabel: 'HIGH IMPACT',
+      text: 'An AI content system can produce blog posts, social media content, and email campaigns at 10x the speed — while maintaining your brand voice.',
+      savings: 'Estimated savings: 10-15 hrs/week of content creation time'
+    });
+  }
+  if (state.pain === 'data' || state.pain === 'all') {
+    findings.push({
+      icon: '📊', title: 'Automated Reporting Dashboard',
+      priority: 'medium',
+      priorityLabel: 'MEDIUM IMPACT',
+      text: 'Stop manually compiling reports. An automated pipeline pulls data from your tools and generates real-time dashboards and scheduled reports.',
+      savings: 'Estimated savings: 5-8 hrs/week of manual data work'
+    });
+  }
+  if (state.pain === 'leads' || state.pain === 'all') {
+    findings.push({
+      icon: '🎯', title: 'AI Lead Generation System',
+      priority: 'medium',
+      priorityLabel: 'MEDIUM IMPACT',
+      text: 'AI can identify, research, and reach out to potential clients automatically — filling your pipeline while you focus on closing.',
+      savings: 'Estimated savings: 8-12 hrs/week of manual outreach'
+    });
+  }
+  if (state.pain === 'admin' || state.pain === 'all') {
+    findings.push({
+      icon: '⚡', title: 'Workflow Automation',
+      priority: 'low',
+      priorityLabel: 'QUICK WIN',
+      text: 'Connect your existing tools (email, CRM, calendar, invoicing) with automated workflows that eliminate repetitive tasks.',
+      savings: 'Estimated savings: 5-10 hrs/week of admin work'
+    });
+  }
+
+  // Industry-specific findings
+  if (state.industry === 'ecommerce') {
+    findings.push({
+      icon: '🛒', title: 'Product Description Generator',
+      priority: 'low',
+      priorityLabel: 'QUICK WIN',
+      text: 'AI can write SEO-optimized product descriptions for your entire catalog in hours instead of weeks.',
+      savings: 'Save 20+ hours per product launch'
+    });
+  }
+  if (state.industry === 'saas') {
+    findings.push({
+      icon: '🔧', title: 'AI-Powered Onboarding',
+      priority: 'medium',
+      priorityLabel: 'MEDIUM IMPACT',
+      text: 'Automated user onboarding flows powered by AI that adapts to each user\'s behavior and needs.',
+      savings: 'Improve activation rate by 20-40%'
+    });
+  }
+  if (state.industry === 'creator') {
+    findings.push({
+      icon: '🎨', title: 'Content Repurposing Engine',
+      priority: 'high',
+      priorityLabel: 'HIGH IMPACT',
+      text: 'Turn one piece of content into 10+ formats automatically — blog → Twitter thread → newsletter → LinkedIn post → video script.',
+      savings: '3x more content output, same effort'
+    });
+  }
+
+  // Render report
+  document.getElementById('step' + currentStep).classList.remove('active');
+  document.getElementById('headerSection').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+
+  document.getElementById('scoreNum').textContent = score;
+  
+  if (score >= 75) {
+    document.getElementById('reportTitle').textContent = 'High AI Automation Potential';
+    document.getElementById('reportSubtitle').textContent = 'Based on your answers, you could save 20+ hours per week with AI automation.';
+  } else if (score >= 60) {
+    document.getElementById('reportTitle').textContent = 'Good AI Automation Potential';
+    document.getElementById('reportSubtitle').textContent = 'You have several areas where AI could save 10-15 hours per week.';
+  } else {
+    document.getElementById('reportTitle').textContent = 'Solid AI Opportunities';
+    document.getElementById('reportSubtitle').textContent = 'There are specific areas where AI could meaningfully improve your workflow.';
+  }
+
+  // Render findings
+  const container = document.getElementById('findingsContainer');
+  container.innerHTML = '<p style="color:var(--muted);font-size:0.85em;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">Your Personalized Findings</p>';
+  findings.forEach(f => {
+    container.innerHTML += `
+      <div class="finding">
+        <div class="finding-header">
+          <div class="finding-icon ${f.priority}">${f.icon}</div>
+          <div class="finding-title">${f.title}</div>
+          <span class="finding-priority ${f.priority}">${f.priorityLabel}</span>
+        </div>
+        <p>${f.text}</p>
+        <div class="savings">${f.savings}</div>
+      </div>
+    `;
+  });
+
+  // Recommendation
+  let recText = '';
+  if (state.pain === 'support' || state.pain === 'all') {
+    recText = `Based on your situation — ${state.team}-person team, ${state.industry} industry — I recommend starting with an AI chatbot to handle customer inquiries. This alone could save your team 15+ hours per week. Once that's running, we can layer in content automation and data dashboards.`;
+  } else if (state.pain === 'content') {
+    recText = `For a ${state.team}-person ${state.industry} team, an AI content pipeline would have the biggest impact. You could 3x your content output without hiring anyone. Start with blog posts and social media, then add email sequences.`;
+  } else if (state.pain === 'data') {
+    recText = `With ${state.team} people on your team, automated reporting alone could save 5-8 hours per week. I'd recommend starting with a dashboard that pulls from your existing tools, then adding AI-generated insights.`;
+  } else {
+    recText = `For your business, I'd recommend starting with the biggest pain point and automating that first. Based on your answers, a targeted AI solution could save 10+ hours per week within the first month.`;
+  }
+  document.getElementById('recText').textContent = recText;
+
+  // Pre-fill email
+  if (state.email) {
+    document.getElementById('reportEmail').value = state.email;
+  }
+
+  document.getElementById('reportSection').classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function sendReport() {
+  const email = document.getElementById('reportEmail').value;
+  if (!email) {
+    alert('Please enter your email');
+    return;
+  }
+  // In production, this would send to a backend
+  alert('Report sent! Check your inbox. (Demo mode — in production this sends a real PDF)');
+}
+</script>
+</body>
+</html>
